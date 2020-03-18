@@ -1,6 +1,6 @@
 //initialize vars and objects
 Class1 object1,object2;
-int var1,var2;
+int var1;
 float var2;
 
 //setup runs once at start of program
