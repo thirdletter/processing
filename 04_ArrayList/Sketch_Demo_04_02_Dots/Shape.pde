@@ -1,6 +1,7 @@
 class Shape{
-  PVector pos;
-  color clr;
+  private PVector pos;
+  private color clr;
+  private int size = 20, round = 5;
 
   //const
   Shape(PVector p, color c){
@@ -11,6 +12,6 @@ class Shape{
   //display
   void display(){
     fill(clr);
-    rect(pos.x, pos.y, 5, 5,3);
+    rect(pos.x, pos.y, size, size, round);
   }
 }

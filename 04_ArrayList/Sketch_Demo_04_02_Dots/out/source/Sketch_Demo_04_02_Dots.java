@@ -42,8 +42,9 @@ public void mousePressed() {
   shapeArr.add(new Shape(new PVector(mouseX, mouseY), color(random(256), random(256), random(256))));
 }
 class Shape{
-  PVector pos;
-  int clr;
+  private PVector pos;
+  private int clr;
+  private int size = 20, round = 5;
 
   //const
   Shape(PVector p, int c){
@@ -54,7 +55,7 @@ class Shape{
   //display
   public void display(){
     fill(clr);
-    rect(pos.x, pos.y, 5, 5,3);
+    rect(pos.x, pos.y, size, size, round);
   }
 }
   public void settings() {  size(500, 500); }
