@@ -34,6 +34,11 @@ public void draw() {
 //keyPressed is called once every time a key is pressed.
 //The key that was pressed is stored in the keyCode variable
 public void keyPressed() {
+  if(key == ' '){ //either this or use KeyCode == '32' as that is the matching keycode. found this by using println(keyCode)
+    for(int i = shapeArr.size() - 1; i >= 0; i--){
+      shapeArr.remove(i);
+    }
+  }
 }
 
 //mousePressed is called once after every time a mouse button is pressed.
