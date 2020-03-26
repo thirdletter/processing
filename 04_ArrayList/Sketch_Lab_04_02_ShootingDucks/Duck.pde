@@ -13,4 +13,8 @@ private int speed;
     void display(){
         image(duckImg, pos.x, pos.y);
     }
+
+    void move(){
+        pos.x -= speed; 
+    }
 }
