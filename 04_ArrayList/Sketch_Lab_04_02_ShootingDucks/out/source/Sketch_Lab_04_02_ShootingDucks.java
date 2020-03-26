@@ -43,11 +43,16 @@ public void draw() {
     text("Score:"+score, (width * 0.66f) +  25, (height - 120));
     text("Lives:"+lives, (width * 0.66f) + 25, (height - 70));
 
+    //display all ducks and move them
     for(int i = 0; i < ducksArr.size(); i++){
         ducksArr.get(i).move();
         ducksArr.get(i).display();
     }
 
+    //add a new duck every second
+    if (frameCount % 60 == 0){
+        ducksArr.add(new Duck());
+    }
 }
 class Duck{
 private PImage duckImg;
@@ -68,7 +73,7 @@ private int speed;
     public void move(){
         if (pos.x < -duckImg.width){ // reset pos.x if image is past screen completely.
             pos.x = width + duckImg.width;
-        }
+        } else
         pos.x -= speed;
     }
 }
