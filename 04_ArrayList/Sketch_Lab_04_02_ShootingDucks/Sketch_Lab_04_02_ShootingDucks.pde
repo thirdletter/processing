@@ -38,3 +38,9 @@ void draw() {
         ducksArr.add(new Duck());
     }
 }
+
+void mousePressed(){
+    for(int j = ducksArr.size() - 1; j >= 0; j--){
+        ducksArr.remove(j);
+    }
+}
