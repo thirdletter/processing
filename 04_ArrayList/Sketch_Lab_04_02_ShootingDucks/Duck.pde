@@ -15,6 +15,9 @@ private int speed;
     }
 
     void move(){
-        pos.x -= speed; 
+        if (pos.x < -duckImg.width){ // reset pos.x if image is past screen completely.
+            pos.x = width + duckImg.width;
+        }
+        pos.x -= speed;
     }
 }
