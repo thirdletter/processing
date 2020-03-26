@@ -1,0 +1,17 @@
+//initialize
+PFont Agency;
+PImage bg,duck,scoreboard;
+
+void void setup() {
+    size(1020, 720);
+    Agency = loadFont("AgencyFB-Bold-48.vlw");
+    bg = loadImage(background.png);
+    scoreboard = loadImage(scoreboard.png);
+    duck = loadImage(duck.png);
+}
+
+void draw() {
+    background(0);
+    background(bg);
+    
+}
