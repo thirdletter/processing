@@ -23,7 +23,8 @@ void draw() {
     textFont(Agency);
 
     //display scoreboard, pos is given
-    image(scoreboard, (width * 0.66), (height - 180));
+    //imgmode is center, so dont forget about offset.
+    image(scoreboard, (width * 0.66) + (scoreboard.width/2), (height - 180) + (scoreboard.height/2));
     text("Score:"+score, (width * 0.66) +  25, (height - 120));
     text("Lives:"+lives, (width * 0.66) + 25, (height - 70));
 
@@ -41,6 +42,8 @@ void draw() {
 
 void mousePressed(){
     for(int j = ducksArr.size() - 1; j >= 0; j--){
+
         ducksArr.remove(j);
+        score++;
     }
 }

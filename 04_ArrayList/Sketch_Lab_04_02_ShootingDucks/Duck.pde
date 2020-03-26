@@ -11,7 +11,9 @@ private int speed;
     }
 
     void display(){
-        image(duckImg, pos.x, pos.y);
+        imageMode(CENTER);
+        //imgmode is center, so dont forget about offset.
+        image(duckImg, pos.x + (duckImg.width/2), (pos.y + duckImg.height/2));
     }
 
     void move(){

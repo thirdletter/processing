@@ -39,7 +39,7 @@ public void draw() {
     textFont(Agency);
 
     //display scoreboard, pos is given
-    image(scoreboard, (width * 0.66f), (height - 180));
+    image(scoreboard, (width * 0.66f) + (scoreboard.width/2), (height - 180) + (scoreboard.height/2));
     text("Score:"+score, (width * 0.66f) +  25, (height - 120));
     text("Lives:"+lives, (width * 0.66f) + 25, (height - 70));
 
@@ -57,7 +57,9 @@ public void draw() {
 
 public void mousePressed(){
     for(int j = ducksArr.size() - 1; j >= 0; j--){
+
         ducksArr.remove(j);
+        score++;
     }
 }
 class Duck{
@@ -73,7 +75,8 @@ private int speed;
     }
 
     public void display(){
-        image(duckImg, pos.x, pos.y);
+        imageMode(CENTER);
+        image(duckImg, pos.x + (duckImg.width/2), (pos.y + duckImg.height/2));
     }
 
     public void move(){
