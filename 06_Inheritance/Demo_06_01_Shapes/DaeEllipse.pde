@@ -1,29 +1,21 @@
-class DaeEllipse{
-  
-  float centerX, centerY, w, h;
-  color clr;
+class DaeEllipse extends DaeShape {
+
   boolean isFilled = false;
-  
-  DaeEllipse(float centerX, float centerY, float w, float h, color clr, boolean isFilled){
-    this.centerX = centerX;
-    this.centerY = centerY;
-    this.w = w;
-    this.h = h;
-    this.clr = clr;
+
+  DaeEllipse(float centerX, float centerY, float w, float h, color clr, boolean isFilled) {
+    super(centerX, centerY, w, h, clr);
     this.isFilled = isFilled;
   }
-  
-  void move(float dx, float dy){
-    centerX += dx;
-    centerY += dy;
+
+  void move(float dx, float dy) {
+    super.move(dx, dy);
   }
-  
-  void display(){
-    if(isFilled){
+
+  void display() {
+    if (isFilled) {
       noStroke();
       fill(clr);
-    }
-    else{
+    } else {
       noFill();
       stroke(clr);
     }

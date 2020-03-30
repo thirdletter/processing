@@ -1,22 +1,14 @@
-class DaeRectangle{
-  
-  float centerX, centerY, w, h;
-  color clr;
-  
-  DaeRectangle(float centerX, float centerY, float w, float h, color clr){
-    this.centerX = centerX;
-    this.centerY = centerY;
-    this.w = w;
-    this.h = h;
-    this.clr = clr;
+class DaeRectangle extends DaeShape {
+
+  DaeRectangle(float centerX, float centerY, float w, float h, color clr) {
+    super(centerX, centerY, w, h, clr);
   }
-  
-  void move(float dx, float dy){
-    centerX += dx;
-    centerY += dy;
+
+  void move(float dx, float dy) {
+    super.move(dx, dy);
   }
-  
-  void display(){
+
+  void display() {
     noStroke();
     fill(clr);
     rectMode(CENTER);
