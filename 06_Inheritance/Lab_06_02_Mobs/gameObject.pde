@@ -1,5 +1,6 @@
 public class GameObject {
-  private int x, y, health, maxHP, speed, score;
+  private int x, health, maxHP, speed, score;
+  protected int y; //protected makes it accessible to subclasses
   private PImage picture;
 
   //const
@@ -16,7 +17,7 @@ public class GameObject {
 
   //move
   public void display() {
-    tint(255, (float)health/maxHP * 255); //health/maxHP returns a number between 0 and 1
+    tint(255, (float)health/maxHP * 255); //health/maxHP returns a number between 0 and 1, times 255 because range is 0,255
     imageMode(CORNER); // is default, only used to be explicit.
     image(picture, x, y);
   }
@@ -29,13 +30,14 @@ public class GameObject {
   //hit detection
   public boolean hitDetection(GameObject other) {
     //only interested in horizontal hit detection. jumping over it still counts as hit
-    if (this.getRight() < other.getLeft()) { //if object is to the left of the other left side of image, aka completely to the left, no hit.
+      if (this.getRight() < other.getLeft()){ //left of the other object
       return false;
     }
-    if (this.getLeft() < other.getRight()) { //if leftside of object is to the right of right side of other object, no hit.
+      if (this.getLeft() > other.getRight()){ //right of the other object
       return false;
+    } else { // if neither condition is met, you have a hit horizontally
+      return true;
     }
-    return true; //because we ignore Y-axis, all other cases are true.
   }
 
   //getters and setters
