@@ -13,7 +13,6 @@ void setup() {
   scoreboard = loadImage("scoreboard.png");
   duck = loadImage("duck.png");
   lives = 3;
-  background(0);
   textFont(Agency);
 
   //add first duck
@@ -21,7 +20,8 @@ void setup() {
 }
 
 void draw() {
-  background(bg);
+  background(0);
+  image(bg,0,0); //cannot set bg img directly due to transparancy.
 
   //display scoreboard, pos is given
   image(scoreboard, (width * 0.66), (height - 180));
