@@ -1,6 +1,6 @@
 class World {
   //initialize vars and objects
-  PImage diaImg, cupImg, doorImg, pipeImg, solidImg;
+  PImage diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg;
   //numbers used to determine what numbers correspond to what tile
   final int emptyTile = 0;
   final int solidTile = 1;
@@ -11,6 +11,8 @@ class World {
   final int doorTile = 6;
   final int playerTile = 7;
   final int pipeTile = 8;
+  final int gemTile = 9;
+  final int redDiaTile = 10;
   //size of one tile and number of tiles both Horizontal and Vertical 
   final int tileSize = 60;
   final int numTilesH = 19;
@@ -19,7 +21,7 @@ class World {
   //describes all the tiles we need for the first level
   int[][] level1 = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
-    {1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1}, 
+    {1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 1}, 
     {1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 1}, 
     {1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1}, 
     {1, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 1}, 
@@ -31,12 +33,14 @@ class World {
   };
 
   //constructor
-  World(PImage diaImg, PImage cupImg, PImage doorImg, PImage pipeImg, PImage solidImg) {
+  World(PImage diaImg, PImage cupImg, PImage doorImg, PImage pipeImg, PImage solidImg,PImage gemImg, PImage redDiaImg) {
     this.diaImg = diaImg;
     this.cupImg = cupImg;
     this.doorImg = doorImg;
     this.pipeImg = pipeImg;
     this.solidImg = solidImg;
+    this.gemImg = gemImg;
+    this.redDiaImg = redDiaImg;
   }
   void display() {
     for (int i=0; i<numTilesH; i++) { // for each column
@@ -57,6 +61,12 @@ class World {
         }
         if (currentLevel[j][i]==solidTile) {
           image(solidImg,i*tileSize, j*tileSize);
+        }
+         if (currentLevel[j][i]==gemTile) {
+          image(gemImg,i*tileSize, j*tileSize);
+        }
+         if (currentLevel[j][i]==redDiaTile) {
+          image(redDiaImg,i*tileSize, j*tileSize);
         }
       }
     }
