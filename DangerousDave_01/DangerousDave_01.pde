@@ -1,5 +1,5 @@
 //initialize vars and objects
-PImage daveImg, diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg;
+PImage emptyImg,daveImg, diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg;
 Dave dave;
 World world1;
 
@@ -47,6 +47,7 @@ void mousePressed() {
 //load images
 private void loadAssets() {
   //images
+  emptyImg = loadImage("emptySprite.png");
   daveImg = loadImage("walkSprite.png");
   diaImg = loadImage("diaSprite.png");
   cupImg = loadImage("cupSprite.png");
@@ -57,6 +58,6 @@ private void loadAssets() {
   redDiaImg = loadImage("redDiaSprite.png");
   //objects
   dave = new Dave(daveImg);
-  world1 = new World(diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg);
+  world1 = new World();
   world1.loadlevel1();
 }
