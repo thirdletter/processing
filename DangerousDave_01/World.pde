@@ -16,6 +16,7 @@ class World {
   final int tileSize = 60;
   final int numTilesH = 19;
   final int numTilesV = 10;
+  int level;
   Tile[][] currentLevel = new Tile[numTilesV][numTilesH]; //creates a 2D array with amount of tiles we need
   //describes all the tiles we need for the first level
   int[][] level1 = {
@@ -43,6 +44,7 @@ class World {
   }
 
   void loadlevel1() {   
+    this.level = 1;
     for (int i=0; i<numTilesH; i++) {
       for (int j=0; j<numTilesV; j++) {
         if (level1[j][i] == emptyTile) {
@@ -82,5 +84,8 @@ class World {
         }
       }
     }
+  }
+   int getLevel(){
+   return level; 
   }
 }
