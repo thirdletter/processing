@@ -12,19 +12,19 @@ void setup() {
 //draw is executed every frame, 60fps by default
 void draw() {
   background(68,36,52);
-    dave.physics();
-    for (int i=0; i<world.numTilesH; i++) { // for each column
-        for (int j=0; j<world.numTilesV; j++) { // for each tile in that column
-           dave.collision(world.currentLevel[j][i]);
-           if (world.currentLevel[j][i].getTaken()){ //check if the tile has been taken by the player
-             //and change the current tile to an empty tile if that is the case
-             world.currentLevel[j][i] = new Empty(new PVector(i*world.tileSize, j*world.tileSize), emptyImg);
-           }
-      }
-    }
   world.display();
   dave.display();
+  dave.physics();
   showHUD();
+
+  //testing before setting in functions
+      for (int i=0; i<world.numTilesH; i++) { // for each column
+        for (int j=0; j<world.numTilesV; j++) { // for each tile in that column
+          if(world.currentLevel[j][i] instanceof Solid){ // check on 
+            rectCollisions(dave, world.currentLevel[j][i]);
+          }
+      }
+    }
 }
 
 
@@ -55,6 +55,42 @@ void keyReleased(){
 //The mouseButton variable can be used to determine which button has been pressed.
 void mousePressed() {
 }
+
+void rectCollisions(Dave rect1, Tile rect2){
+  //rect1 is dave, rect2 is tile
+  float distX = (rect1.pos.x + world.getTileSize()/2) - (rect2.pos.x + world.getTileSize()/2);
+  float distY = (rect1.pos.y + world.getTileSize()/2) - (rect2.pos.y + world.getTileSize()/2);
+
+  if (abs(distX) < world.getTileSize()){
+    //collision on x, check to see if y collides
+    if (abs(distY) < world.getTileSize()){
+      //they are colliding
+      //find how much they overlap on each axis
+      float overlapX = world.getTileSize() - abs(distX);
+      float overlapY = world.getTileSize() - abs(distY);
+      //collision is happening on the axis with least amount of overlap
+      if (overlapX >= overlapY){
+        if (distY > 0){
+          //top
+          rect1.pos.x += overlapY;
+        } else {
+          //bottom
+          rect1.pos.x -= overlapY;
+        }
+      } else {
+          if (distX > 0){
+            //left
+            rect1.pos.x += overlapX;
+          }
+          else{
+            //right
+            rect1.pos.x -= overlapX;
+          }
+      }
+      }
+    } 
+  }
+
 
 //load images
 private void loadAssets() {

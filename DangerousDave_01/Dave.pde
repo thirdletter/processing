@@ -22,20 +22,68 @@ class Dave { //<>//
   }
 
   void display() {
-    if ( velocity.x < 0) {  //goes left
+    if ( accel.x < 0) {  //goes left
       image(arrImg[0], pos.x, pos.y);
     }
-    if (velocity.x == 0) {  //does not move horizontal 
+    if (accel.x == 0) {  //does not move horizontal 
       image(arrImg[1], pos.x, pos.y);
     }
-    if (velocity.x > 0) {  //goes right
+    if (accel.x > 0) {  //goes right
       image(arrImg[2], pos.x, pos.y);
     }
   }
+
+  void collision(Tile tile) {
+    float distX = (this.pos.x + 55/2) - (tile.pos.x + world.getTileSize()/2);
+    float distY = (this.pos.y + 58/2) - (tile.pos.y + world.getTileSize()/2);
+    float combinedHalfWidths = 58/2 + world.getTileSize()/2;
+    float combinedHalfHeights = 58/2 + world.getTileSize()/2;
+    float overlapX = world.getTileSize() - abs(distX);
+    float overlapY = world.getTileSize() - abs(distY);
+    if (abs(distX) < combinedHalfWidths) {
+      //collision on x, check to see if y collides
+      if (abs(distY) < combinedHalfHeights) {
+        //they are colliding
+        if (tile instanceof Dia || tile instanceof Gem) {
+          //need to find a solution so each diamond only counts once and is replaced with emptytile as soon as we pick it up.
+          this.addScore(tile.getPoints());
+          tile.setTaken();
+        }
+        //wallCollision
+        if (tile instanceof Solid || tile instanceof Pipe) {     
+          //find how much they overlap on each axis
+          //collision is happening on the axis with least amount of overlap
+          if (overlapX >= overlapY) {
+            if (distY > 0) {
+              //top edge of player
+              this.pos.y += overlapY;
+              this.velocity.y = 0;
+            }else if (distY < world.getTileSize()) {
+              //bottom edge of player
+              this.pos.y -= overlapY;
+              this.velocity.y = 0;
+              isJumping = false;
+            }
+          }else if (overlapX < overlapY) {
+            if (distX > 0) {
+              //Left edge of player
+              this.pos.x += overlapX;
+              this.velocity.x = 0;
+            }else if (distX < world.getTileSize()) {
+              //right edge of player
+              this.pos.x -= overlapX;
+              this.velocity.x = 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
   public void physics() {
     //reset acceleration !! NOT EQUALS TO VELOCITY !!
     //to prevent exponential increases in velocity
-   accel.x = 0;
+    accel.x = 0;
     //Check if player currently is pressing left or right, and increase/decrease accel accordingly
     if (leftPressed) {
       accel.x -= 0.1;
@@ -43,7 +91,7 @@ class Dave { //<>//
     } else if (rightPressed) {
       accel.x += 0.1;
       friction = 1; //no friction
-    } else if(!leftPressed && !rightPressed) { // no horizontal key pressed
+    } else if (!leftPressed && !rightPressed) { // no horizontal key pressed
       accel.x -= 0; // dont change accel
       friction = 0.96; // add friction
     }
@@ -54,29 +102,15 @@ class Dave { //<>//
       velocity.x = 0;
     }
     //check if player is jumping
-    if (velocity.y == 0) {
-      isJumping = false;
-    }
+    //if (velocity.y == 0) {
+    //  isJumping = false;
+    //}
     //add acceleration to respective velocity
     velocity.x += accel.x;
     velocity.y += accel.y;
     //add velocity to respective position
     pos.x += velocity.x;
     pos.y += velocity.y;
-    //prevent player from falling through the ground
-    if (pos.y > height-60-arrImg[0].height) {      
-      pos.y = height-60-arrImg[0].height;
-      velocity.y = 0;
-    }
-    //prevent player from exiting our screen horizontally
-    if (pos.x < 60) {
-      velocity.x = 0;
-      pos.x = 60;
-    }
-    if (pos.x > width-60-arrImg[0].width) {
-      velocity.x = 0;
-      pos.x = width-60-arrImg[0].width;
-    }
   }
   public void pressLeft(boolean bool) {
     leftPressed = bool;
@@ -95,5 +129,8 @@ class Dave { //<>//
   }
   int getScore() {
     return score;
+  }
+  void addScore(int newScore) {
+    score += newScore;
   }
 }
