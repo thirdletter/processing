@@ -1,7 +1,7 @@
 //initialize vars and objects
 PImage emptyImg,daveImg, diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg;
 Dave dave;
-World world1;
+World world;
 
 //setup runs once at start of program
 void setup() {
@@ -12,10 +12,12 @@ void setup() {
 //draw is executed every frame, 60fps by default
 void draw() {
   background(68,36,52);
-  world1.display();
+  world.display();
   dave.display();
   dave.physics(); 
+  showHUD();
 }
+
 
 //keyPressed is called once every time a key is pressed.
 //The key that was pressed is stored in the keyCode variable
@@ -58,6 +60,16 @@ private void loadAssets() {
   redDiaImg = loadImage("redDiaSprite.png");
   //objects
   dave = new Dave(daveImg);
-  world1 = new World();
-  world1.loadlevel1();
+  world = new World();
+  world.loadlevel1();
+}
+
+void showHUD(){
+  textSize(30);
+  textAlign(LEFT);
+  text("Score: "+dave.getScore(), 20,35);
+  textAlign(CENTER);
+  text("Level: " + world.getLevel() , width/2,35);
+  textAlign(RIGHT);
+  text("Daves: " + dave.getCurLives() , width-20,35);
 }
