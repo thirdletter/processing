@@ -4,7 +4,7 @@ class Dave { //<>//
   private int maxLives, curLives, score;
   private float friction;
   private PVector pos, accel, velocity;
-  private boolean leftPressed, rightPressed, isJumping;
+  private boolean leftPressed, rightPressed, isJumping, hasCup;
 
   public Dave(PImage daveImg) {
     pos = new PVector();
@@ -25,7 +25,7 @@ class Dave { //<>//
     if ( accel.x < 0) {  //goes left
       image(arrImg[0], pos.x, pos.y);
     }
-    if (accel.x == 0) {  //does not move horizontal 
+    if (accel.x == 0) {  //does not move horizontally 
       image(arrImg[1], pos.x, pos.y);
     }
     if (accel.x > 0) {  //goes right
@@ -34,16 +34,24 @@ class Dave { //<>//
   }
 
   void collision(Tile tile) {
-    float distX = (this.pos.x + 55/2) - (tile.pos.x + world.getTileSize()/2);
-    float distY = (this.pos.y + 58/2) - (tile.pos.y + world.getTileSize()/2);
-    float combinedHalfWidths = 58/2 + world.getTileSize()/2;
-    float combinedHalfHeights = 58/2 + world.getTileSize()/2;
-    float overlapX = world.getTileSize() - abs(distX);
-    float overlapY = world.getTileSize() - abs(distY);
+    float distX = (this.pos.x + arrImg[0].width/2) - (tile.pos.x + world.getTileSize()/2);
+    float distY = (this.pos.y + arrImg[0].height/2) - (tile.pos.y + world.getTileSize()/2);
+    float combinedHalfWidths = arrImg[0].width/2 + world.getTileSize()/2;
+    float combinedHalfHeights = arrImg[0].height/2 + world.getTileSize()/2;
+    float overlapX = combinedHalfWidths - abs(distX);
+    float overlapY = combinedHalfHeights - abs(distY);
     if (abs(distX) < combinedHalfWidths) {
       //collision on x, check to see if y collides
       if (abs(distY) < combinedHalfHeights) {
         //they are colliding
+        if (tile instanceof Door && dave.getCupState()) {
+          //end the level
+          //find a way to load the next level
+        }
+        if (tile instanceof Cup) {
+          tile.setTaken();
+          dave.setCupState(true);
+        }
         if (tile instanceof Dia || tile instanceof Gem) {
           //need to find a solution so each diamond only counts once and is replaced with emptytile as soon as we pick it up.
           this.addScore(tile.getPoints());
@@ -58,18 +66,18 @@ class Dave { //<>//
               //top edge of player
               this.pos.y += overlapY;
               this.velocity.y = 0;
-            }else if (distY < world.getTileSize()) {
+            } else if (distY < combinedHalfHeights) {
               //bottom edge of player
               this.pos.y -= overlapY;
               this.velocity.y = 0;
               isJumping = false;
             }
-          }else if (overlapX < overlapY) {
+          } else if (overlapX < overlapY) {
             if (distX > 0) {
               //Left edge of player
               this.pos.x += overlapX;
               this.velocity.x = 0;
-            }else if (distX < world.getTileSize()) {
+            } else if (distX < combinedHalfWidths) {
               //right edge of player
               this.pos.x -= overlapX;
               this.velocity.x = 0;
@@ -132,5 +140,11 @@ class Dave { //<>//
   }
   void addScore(int newScore) {
     score += newScore;
+  }
+  boolean getCupState() {
+    return hasCup;
+  }
+  void setCupState(boolean newState) {
+    hasCup = newState;
   }
 }

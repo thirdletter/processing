@@ -1,8 +1,7 @@
-class Gem extends Tile{
+class Gem extends Tile {
 
-  Gem(PVector pos, PImage tileImg){
+  Gem(PVector pos, PImage tileImg) {
     super (pos, tileImg);
     setPoints(1000);
   }
-  
 }

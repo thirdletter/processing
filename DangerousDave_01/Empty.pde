@@ -1,7 +1,6 @@
-class Empty extends Tile{
+class Empty extends Tile {
 
-  Empty(PVector pos, PImage tileImg){
+  Empty(PVector pos, PImage tileImg) {
     super (pos, tileImg);
   }
-  
 }

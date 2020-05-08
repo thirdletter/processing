@@ -38,7 +38,7 @@ class World {
   void display() {
     for (int i=0; i<numTilesH; i++) { // for each column
       for (int j=0; j<numTilesV; j++) { // for each tile in that column
-         currentLevel[j][i].display();
+        currentLevel[j][i].display();
       }
     }
   }
@@ -84,10 +84,10 @@ class World {
       }
     }
   }
-   int getLevel(){
-   return level; 
+  int getLevel() {
+    return level;
   }
-  public int getTileSize(){
+  public int getTileSize() {
     return tileSize;
   }
 }

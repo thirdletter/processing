@@ -1,7 +1,6 @@
-class Pipe extends Tile{
+class Pipe extends Tile {
 
-  Pipe(PVector pos, PImage tileImg){
+  Pipe(PVector pos, PImage tileImg) {
     super (pos, tileImg);
   }
-  
 }

@@ -1,8 +1,7 @@
-class Dia extends Tile{
+class Dia extends Tile {
 
-  Dia(PVector pos, PImage tileImg){
+  Dia(PVector pos, PImage tileImg) {
     super (pos, tileImg);
     setPoints(150);
   }
-  
 }

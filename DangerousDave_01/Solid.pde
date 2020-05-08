@@ -1,7 +1,6 @@
-class Solid extends Tile{
+class Solid extends Tile {
 
-  Solid(PVector pos, PImage tileImg){
+  Solid(PVector pos, PImage tileImg) {
     super (pos, tileImg);
   }
-  
 }
