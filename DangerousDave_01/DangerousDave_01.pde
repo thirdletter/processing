@@ -2,6 +2,8 @@
 PImage emptyImg, daveImg, diaImg, cupImg, doorImg, pipeImg, solidImg, gemImg, redDiaImg;
 Dave dave;
 World world;
+Table level1, level2;
+String playerName;
 
 //setup runs once at start of program
 void setup() {
@@ -68,21 +70,62 @@ private void loadAssets() {
   solidImg = loadImage("solidSprite.png");
   gemImg = loadImage("gemSprite.png");
   redDiaImg = loadImage("redDiaSprite.png");
+  //levels
+  level1 = loadTable("level1.csv");
+  level2 = loadTable("level2.csv");
   //objects
   dave = new Dave(daveImg);
-  world = new World();
-  world.loadlevel1();
+  world = new World();  
+  //load playername
+  String[]newPlayerName = loadStrings("playerName.txt");
+  playerName = newPlayerName[0];
+  world.loadLevel(level1);
 }
 
 void showHUD() {
   textSize(30);
   textAlign(LEFT);
   text("Score: "+dave.getScore(), 20, 35);
+  text("Player Name: "+playerName, 20, 580);
   textAlign(CENTER);
-  text("Level: " + world.getLevel(), width/2, 35);
+  text(world.getLevelName(), width/2, 35);
   if (dave.getCupState()) {
     text("!!! GO THROUGH THE DOOR !!!", width/2, 580);
   }
   textAlign(RIGHT);
   text("Daves: " + dave.getCurLives(), width-20, 35);
+}
+
+//copied from file IO theory and changed to fit our game
+void saveScoreToFile() {
+  Table newScores = new Table();
+  newScores.addColumn("Date / Time");
+  newScores.addColumn("Player");
+  newScores.addColumn("Score");
+
+  //load the existing table and add to the new table
+  Table oldScores = loadTable("data/scores.csv", "header");
+  if (oldScores != null) { //only executes if data/file is found
+    TableRow oldRow;
+    for (TableRow row : oldScores.rows()) {
+      String dateTime = row.getString("Date / Time");
+      String player = row.getString("Player");
+      int score = row.getInt("Score");
+
+      oldRow = newScores.addRow();
+      oldRow.setString("Date / Time", dateTime);
+      oldRow.setString("Player", player);
+      oldRow.setInt("Score", score);
+    }
+  }
+  TableRow newRow;
+  String dt = day()+"/"+month()+"/"+year()+" - "+hour()+":"+minute()+":"+second();
+  //add score to table
+  newRow = newScores.addRow();
+  newRow.setString("Date / Time", dt);
+  newRow.setString("Player", playerName);
+  newRow.setInt("Score", dave.getScore());
+  //and save to file
+  saveTable(newScores, "data/scores.csv");
+  noLoop();
 }

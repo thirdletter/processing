@@ -46,6 +46,7 @@ class Dave { //<>//
         //they are colliding
         if (tile instanceof Door && dave.getCupState()) {
           //end the level
+          saveScoreToFile();
           //find a way to load the next level
         }
         if (tile instanceof Cup) {
